@@ -7,6 +7,17 @@ django.setup()
 from rango.models import Category, Page
 
 def populate():
+
+    nisa_cat = add_cat('Waqar-un-nisa Nabi', 0, 0)
+
+    add_page(cat=nisa_cat,
+        title="Git Hub Page",
+        url="https://github.com/2033822mangoNisa")
+    
+    add_page(cat=nisa_cat,
+        title="Pythonanywhere.com page",
+        url="https://www.pythonanywhere.com/user/2033822mangoNisa")
+    
     python_cat = add_cat('Python', 128, 64)
     
     add_page(cat=python_cat,
