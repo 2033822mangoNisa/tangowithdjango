@@ -26,8 +26,29 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TEMPLATE_PATH = os.path.join(BASE_DIR,'templates')
+
+STATIC_PATH = os.path.join(BASE_DIR,'static')
+
+MEDIA_ROOT= os.path.join(BASE_DIR, 'media')# Absolute path to the media directory
+
+STATIC_URL = '/static/'
+
+MEDIA_URL = '/media/'
+
 
 # Application definition
+
+TEMPLATE_DIRS = [
+    #Put string here, like "/home/html/django_templates" or "C:/www/django/templates".
+    #Always use forward slashs, even on windows
+    #Don't forgetto use absolute paths, not relative paths
+    TEMPLATE_PATH,
+]
+
+STATICFILES_DIRS = (
+    STATIC_PATH,
+)
 
 INSTALLED_APPS = (
     'django.contrib.admin',
