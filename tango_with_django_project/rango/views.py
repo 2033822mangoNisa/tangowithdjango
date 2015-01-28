@@ -15,6 +15,7 @@ def index(request):
     return render(request, 'rango/index.html', context_dict)
 
 def about(request):
+    context_dict = { 'boldmessage': "I am bold too!"}
     return render(request, 'rango/about.html', context_dict)
 
 def category(request, category_name_slug):
