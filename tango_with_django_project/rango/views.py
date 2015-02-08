@@ -1,6 +1,58 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rango.models import Category, Page
+from rango.forms import CategoryForm
+from rango.forms import PageForm
+
+def add_page(request, category_name_slug):
+
+    try:
+        cat = Category.objects.get(slug=category_name_slug)
+    except Category.DoesNotExist:
+                cat = None
+
+    if request.method == 'POST':
+        form = PageForm(request.POST)
+        if form.is_valid():
+            if cat:
+                page = form.save(commit=False)
+                page.category = cat
+                page.views = 0
+                page.save()
+                # probably better to use a redirect here.
+                return category(request, category_name_slug)
+        else:
+            print form.errors
+    else:
+        form = PageForm()
+
+    context_dict = {'form':form, 'category': cat}
+
+    return render(request, 'rango/add_page.html', context_dict)
+
+def add_category(request):
+    # A HTTP POST?
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+
+        #is it in a valif form?
+        if form.is_valid():
+            #save new category to database
+            form.save(commit=True)
+
+            #Now call the index view()
+            #The user will be shown the homepage
+            return index(request)
+        else:
+            # the supplied form contained error, print them to the terrminal
+            print form.errors
+    else:
+        #if request is not a post, display the form to enter details
+        form = CategoryForm()
+
+    #Bad form(or form details), no form supplied...
+    #Render the form with errr messaes(if any)
+    return render(request, 'rango/add_category.html', {'form':form})
 
 def index(request):
     # Query the database for a list of ALL categories currently stored.
@@ -39,6 +91,8 @@ def category(request, category_name_slug):
         # We also add the category object from the database to the context dictionary.
         # We'll use this in the template to verify that the category exists.
         context_dict['category'] = category
+
+        context_dict['category_name_url'] = category_name_slug
     except Category.DoesNotExist:
         # We get here if we didn't find the specified category.
         # Don't do anything - the template displays the "no category" message for us.
