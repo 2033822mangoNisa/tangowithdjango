@@ -1,19 +1,14 @@
-<!DOCTYPE html>
+{% extends 'rango/base.html' %}
 
-{% load staticfiles %} <!-- New line-->
+{% load staticfiles %}
 
-<html>
+{% block title %}{{ category_name }}{% endblock %}
 
-	<head>
-		<title>Rango: About</title>
-	</head>
-	
-	<body>
+{% block body_block %}
+
 		<h1>Rango says:</h1>
 		Here is the about page!<br />
 		This tutorial has been put together by Waqar-un-nisa Nabi, 2033822N
-		<a href = "/rango">Index</a><br />
 		<img src ="{% static "images/me.jpg " %}" alt = "Picture of Waqar-un-nisa Nabi" /> <!--New Line-->
 
-	</body>
-<html> 
+{% endblock %}

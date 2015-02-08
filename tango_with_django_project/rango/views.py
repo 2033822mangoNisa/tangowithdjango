@@ -20,7 +20,7 @@ def user_logout(request):
 
 @login_required
 def restricted(request):
-    return HttpResponse("Since you're logged in, you can see this text!")
+    return render(request, 'rango/restricted.html', {})
 
 def user_login(request):
 
@@ -184,7 +184,7 @@ def index(request):
 
 def about(request):
     context_dict = { 'boldmessage': "I am bold too!"}
-    return render(request, 'rango/about.html', context_dict)
+    return render(request, 'rango/about.html', {})
 
 def category(request, category_name_slug):
 
