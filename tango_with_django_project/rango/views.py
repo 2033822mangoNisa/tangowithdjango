@@ -19,6 +19,9 @@ def user_logout(request):
     # Take the user back to the homepage.
     return HttpResponseRedirect('/rango/')
 
+def password_change(request):
+    return render(request, 'rango/password_change.html', {})
+
 @login_required
 def restricted(request):
     return render(request, 'rango/restricted.html', {})
