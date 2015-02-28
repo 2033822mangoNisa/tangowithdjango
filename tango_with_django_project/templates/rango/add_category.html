@@ -1,11 +1,13 @@
 {% extends 'rango/base.html' %}
 
-{% load staticfiles %}
+{% block title %}Add Category{% endblock %}
 
-{% block title %}{{ category_name }}{% endblock %}
 
 {% block body_block %}
-        <h1>Add a Category</h1>
+
+
+	<form role="form"  id="category_form" method="post" action="/rango/category/{{category.slug}}/add_category/">
+		<h2 class="form-signin-heading">Add a Category</h2>
 
         <form id="category_form" method="post" action="/rango/add_category/">
 

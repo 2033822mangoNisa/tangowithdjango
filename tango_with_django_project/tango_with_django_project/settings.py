@@ -46,6 +46,8 @@ MEDIA_URL = '/media/'
 
 LOGIN_URL = '/accounts/login/'
 
+
+
 # Application definition
 
 TEMPLATE_DIRS = [
@@ -68,6 +70,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rango',
     'registration',
+    'bootstrap_toolkit',
 )
 
 PASSWORD_HASHERS = (
