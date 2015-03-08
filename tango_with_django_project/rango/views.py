@@ -9,56 +9,20 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from datetime import datetime
-from rango.bing_search import run_query
-from django.shortcuts import redirect
 
 # Use the login_required() decorator to ensure only those logged in can access the view.
-@login_required
+'''@login_required
 def user_logout(request):
     # Since we know the user is logged in, we can now just log them out.
     logout(request)
 
     # Take the user back to the homepage.
-    return HttpResponseRedirect('/rango/')
-
-def register_profile():
-    
-def search(request):
-
-    result_list = []
-
-    if request.method == 'POST':
-        query = request.POST['query'].strip()
-
-        if query:
-            # Run our Bing function to get the results list!
-            result_list = run_query(query)
-
-    return render(request, 'rango/search.html', {'result_list': result_list})
-
-def track_url(request):
-    page_id = None
-    url = '/rango/'
-    if request.method == 'GET':
-        if 'page_id' in request.GET:
-            page_id = request.GET['page_id']
-            try:
-                page = Page.objects.get(id=page_id)
-                page.views = page.views + 1
-                page.save()
-                url = page.url
-            except:
-                pass
-
-    return redirect(url)
-
-def password_change(request):
-    return render(request, 'rango/password_change.html', {})
+    return HttpResponseRedirect('/rango/')'''
 
 @login_required
 def restricted(request):
     return render(request, 'rango/restricted.html', {})
-
+'''
 def user_login(request):
 
     # If the request is a HTTP POST, try to pull out the relevant information.
@@ -97,7 +61,8 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'rango/login.html', {})
-    
+'''
+'''   
 def register(request):
 
     if request.session.test_cookie_worked():
@@ -158,7 +123,7 @@ def register(request):
     return render(request,
             'rango/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
-
+'''
 @login_required
 def add_page(request, category_name_slug):
 
@@ -252,29 +217,31 @@ def about(request):
 
 def category(request, category_name_slug):
 
+    # Create a context dictionary which we can pass to the template rendering engine.
     context_dict = {}
-    context_dict['result_list'] = None
-    context_dict['query'] = None
-    if request.method == 'POST':
-        query = request.POST['query'].strip()
-
-        if query:
-            # Run our Bing function to get the results list!
-            result_list = run_query(query)
-
-            context_dict['result_list'] = result_list
-            context_dict['query'] = query
 
     try:
+        # Can we find a category name slug with the given name?
+        # If we can't, the .get() method raises a DoesNotExist exception.
+        # So the .get() method returns one model instance or raises an exception.
         category = Category.objects.get(slug=category_name_slug)
         context_dict['category_name'] = category.name
-        pages = Page.objects.filter(category=category).order_by('-views')
+
+        # Retrieve all of the associated pages.
+        # Note that filter returns >= 1 model instance.
+        pages = Page.objects.filter(category=category)
+
+        # Adds our results list to the template context under name pages.
         context_dict['pages'] = pages
+        # We also add the category object from the database to the context dictionary.
+        # We'll use this in the template to verify that the category exists.
         context_dict['category'] = category
+
+        context_dict['category_name_url'] = category_name_slug
     except Category.DoesNotExist:
+        # We get here if we didn't find the specified category.
+        # Don't do anything - the template displays the "no category" message for us.
         pass
 
-    if not context_dict['query']:
-        context_dict['query'] = category.name
-
+    # Go render the response and return it to the client.
     return render(request, 'rango/category.html', context_dict)
