@@ -13,8 +13,9 @@ urlpatterns = patterns('',
         url(r'^edit_profile/$', views.edit_profile, name='edit_profile'),
         url(r'^profile/(?P<username>[\w\-]+)/$', views.profile, name='profile'),
         url(r'^restrict/ed/', views.restricted, name='restricted'),
+        url(r'^users_page/$', views.users_page, name='users_page'),
         #url(r'^search/$', views.search, name='search'),
         url(r'^goto/$', views.track_url, name='goto'),
-        #url(r'^logout/$', views.user_logout, name='logout'),
+        
 
 )

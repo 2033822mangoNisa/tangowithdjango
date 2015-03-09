@@ -12,6 +12,10 @@
 		<p></strong> Visits: {{ visits }}</p>
 		Here is the about page!<br />
 		This tutorial has been put together by Waqar-un-nisa Nabi, 2033822N
-		<img src ="{% static "images/me.jpg " %}" alt = "Picture of Waqar-un-nisa Nabi" /> <!--New Line-->
+		<p><a href="{% url 'auth_password_change' %}">Change password</a></p>
+	</div>
+	</div>
+		<img src ="{% static "images/me.jpg " %}" alt = "Picture of Waqar-un-nisa Nabi" width = "380px" height = "500px"/> <!--New Line-->
+	
 	</div>
 {% endblock %}

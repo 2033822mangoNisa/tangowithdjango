@@ -1,0 +1,40 @@
+{% extends 'rango/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block body_block %}
+
+<div class="page-header">
+    <h1>{{ user.username }}</h1>
+</div>
+	<br><br>
+	<form id="userprofile_form" class="form" method="post" action="{% url 'edit_profile' %}" enctype="multipart/form-data">
+	{% csrf_token %}    
+	<div class="container-fluid well span6">
+		<h3> Edit Profile </h3>
+		<div class="row-fluid">
+		{% if user_profile.picture %}
+		<div class="span8 profile" >
+		  <img width="85" height="85" src="{{ user_profile.picture.url }}" class="avatar img-rounded" alt="profile picture"/>
+		</div>
+		{% endif %}
+		
+		<div class="span2">
+			<label> {{ form.picture }} </label></div>   
+			<h4>Personal info</h4>
+
+		<div class="form">
+			<label class="col-lg-3 control-label">Website: </label>
+				<p><strong>{{ form.website }} </strong></p>
+		</div>
+		<div class="span2">
+			<button class="btn btn-primary " type="submit" value="Submit" />Save</button>
+			<a class="btn btn-default" href="{% url 'profile' user.username %}" >Cancel</a>       
+
+		</div>
+	</div>	
+	</div>
+	</form>
+{% endblock %}
