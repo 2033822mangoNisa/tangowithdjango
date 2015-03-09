@@ -1,0 +1,21 @@
+{% extends 'rango/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %} Add Profile {% endblock %}
+
+{% block body_block %}
+	<form id="userprofile_form" method="post" action="{% url 'add_profile' %}" enctype="multipart/form-data">
+
+	<h2 class="form-signin-heading">Create profile for {{ user }}</h2>
+		{% csrf_token %}
+	  <div class="form-group">
+		<p><strong> Enter your website: {{ form.website }} </strong></p>
+		<br><label> Select a profile picture: {{ form.picture }} </label>
+	  </div>
+
+	<button class="btn btn-primary" type="submit" name="submit">Add profile</button>
+
+	</form>
+ 
+{% endblock %}
